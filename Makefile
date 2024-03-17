@@ -1,14 +1,7 @@
-obj-m := softuart.o
-PWD := $(shell pwd)
-
-KERNEL_SRC_DIR := /root/raspberry/linux
-GCC_PREFIX := arm-bcm2708-linux-gnueabi-
+obj-m += softuart.o
 
 all:
-	$(MAKE) -C $(KERNEL_SRC_DIR) M=$(PWD) modules ARCH=arm CROSS_COMPILE=$(GCC_PREFIX)
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
 
-load:
-	insmod softuart.ko
-
-unload:
-	rmmod softuart
+clean:
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
